@@ -1,5 +1,5 @@
 ---
-title: Welcome to AI interaction log for garcias
+title: Welcome
 layout: default
 ---
 

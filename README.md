@@ -2,11 +2,10 @@
 
 Website to publicly log my interactions with public AI agents, for transparency and attribution. Also disclose ethical principles I will follow in these interactions.
 
-To build in a Jekyll devcontainer, install from Gemfile using
+[build.sh](build.sh) contains functions to install helpful gems and to build and serve, for testing in a devcontainer.
 
 ```sh
-gem install bundler jekyll && bundle update
+source serve.sh
+install
+serve
 ```
-
-Then `source serve.sh` to obtain `serve` function, which will run `bundle exec jekyll serve`.
-
