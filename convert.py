@@ -2,6 +2,8 @@ import sys
 import json
 from string import Template
 from jekyll import JekyllPage
+from pathlib import Path
+from slugify import slugify
 
 round_template = Template("""
 #### ${index}
@@ -25,8 +27,7 @@ def blockquote( text:str ) -> str:
         lines = [ f"> {line}" for line in lines ]
         return "\n".join( lines )
 
-def bard_to_md( source: str ) -> str:
-    source_json = json.loads( source )
+def bard_to_md( source_json: dict ) -> str:
     rounds = source_json['rounds']
     rounds = [
         format_round( i + 1, round['query'], round['response'] )
@@ -44,10 +45,23 @@ if __name__ == "__main__":
     try:
         source_type = sys.argv[1]
     except IndexError:
-        source_type = 'bard'
+        print( 'First parameter is model for parsing file content, e.g., "bard"' )
 
-    source = "".join( sys.stdin )
+    try:
+        source_path = Path( sys.argv[2] )
+        with source_path.open() as f:
+            source = "".join( f.read() )
+            source = json.loads( source )
+    except IndexError:
+        print( 'Second parameter is filename with structure consistent with model' )
+
     if source_type == 'bard':
-        print( bard_to_md( source ) )
-
-
+        date = source['metadata']['date']
+        slug = slugify( source['metadata']['title'] )
+        post_name = f'{date}-{slug}.md'
+        archive_name = f'{date}-{slug}.json'
+        post_path = Path('_posts') / Path(post_name)
+        archive_path = Path('archive') / Path(archive_name)
+        with post_path.open( mode='w' ) as f:
+            f.write( bard_to_md( source ) )
+        source_path.replace( archive_path )
