@@ -10,15 +10,19 @@ ${prompt}
 ${response}\
 """)
 
+def format_round( index: int, prompt: str, response: str ) -> str :
+    round = round_template.substitute( prompt = prompt, response = response )
+    return f"#### {index}\n\n{blockquote( round )}"
+
 def blockquote( text:str ) -> str:
         lines = text.split('\n')
         lines = [ f"> {line}\n" for line in lines ]
-        return "".join( lines )    
+        return "".join( lines )
 
 def bard_to_md( source: str ) -> str:
     source_json = json.loads( source )
     rounds = [
-        f"#### {i+1}\n\n{blockquote( round_template.substitute( prompt = round['query'], response = round['response'] ) )}"
+        format_round( i + 1, round['query'], round['response'] )
         for i, round in enumerate(source_json)
     ]
     return "\n".join( rounds )
