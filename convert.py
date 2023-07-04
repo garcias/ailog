@@ -36,8 +36,9 @@ def bard_to_md( source_json: dict ) -> str:
     rounds_str = "\n".join( rounds )
     title = source_json['metadata']['title']
     date = source_json['metadata']['date']
+    agent = source_json['metadata']['agent']
     front_matter = { 'title': title, 'layout': "post" }
-    content = f"# {title}\n\n_{date}_\n\n{rounds_str}"
+    content = f"# {title}\n\n_date:_ {date}\n\n_agent_: {agent}\n\n{rounds_str}"
     jp = JekyllPage( front_matter=front_matter, content=content )
     return jp.page()
 

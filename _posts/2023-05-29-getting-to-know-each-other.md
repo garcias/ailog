@@ -4,7 +4,9 @@ title: Getting to know each other
 ---
 # Getting to know each other
 
-_2023-05-29_
+_date:_ 2023-05-29
+
+_agent_: bard
 
 
 #### 1

@@ -4,7 +4,9 @@ title: What Bard says about itself
 ---
 # What Bard says about itself
 
-_2023-05-30_
+_date:_ 2023-05-30
+
+_agent_: bard
 
 
 #### 1
