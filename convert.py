@@ -2,22 +2,27 @@ import sys
 import json
 from string import Template
 
-round_template = Template("""\
+round_template = Template("""
+#### ${index}
+
 {: prompt }
 ${prompt}
 
 {: response }
-${response}\
+${response}
 """)
 
 def format_round( index: int, prompt: str, response: str ) -> str :
-    round = round_template.substitute( prompt = prompt, response = response )
-    return f"#### {index}\n\n{blockquote( round )}"
+    return round_template.substitute( 
+        index = index,
+        prompt = blockquote( prompt ),
+        response = blockquote( response ),
+    )
 
 def blockquote( text:str ) -> str:
         lines = text.split('\n')
-        lines = [ f"> {line}\n" for line in lines ]
-        return "".join( lines )
+        lines = [ f"> {line}" for line in lines ]
+        return "\n".join( lines )
 
 def bard_to_md( source: str ) -> str:
     source_json = json.loads( source )
