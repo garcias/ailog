@@ -1,6 +1,7 @@
 import sys
 import json
 from string import Template
+from jekyll import JekyllPage
 
 round_template = Template("""
 #### ${index}
@@ -26,11 +27,18 @@ def blockquote( text:str ) -> str:
 
 def bard_to_md( source: str ) -> str:
     source_json = json.loads( source )
+    rounds = source_json['rounds']
     rounds = [
         format_round( i + 1, round['query'], round['response'] )
-        for i, round in enumerate(source_json)
+        for i, round in enumerate( rounds )
     ]
-    return "\n".join( rounds )
+    rounds_str = "\n".join( rounds )
+    title = source_json['metadata']['title']
+    date = source_json['metadata']['date']
+    front_matter = { 'title': title, 'layout': "post" }
+    content = f"# {title}\n\n_{date}_\n\n{rounds_str}"
+    jp = JekyllPage( front_matter=front_matter, content=content )
+    return jp.page()
 
 if __name__ == "__main__":
     try:
