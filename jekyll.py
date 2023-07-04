@@ -12,13 +12,13 @@ class JekyllPage:
             f.write( self.page() )
 
     def page( self ):
-        p = f"---\n{ yaml.safe_dump( self.front_matter ) }\n---\n"
+        p = f"---\n{ yaml.safe_dump( self.front_matter ) }---\n"
         p += self.content + "\n"
         return p
     
 if __name__ == "__main__":
     fm = { 'title': "Welcome", 'layout': "default" }
     content = "Hello, World!"
-    jp = JekyllPage( fm, )
+    jp = JekyllPage( fm, content )
     print( "Demonstration:" )
     print( jp.page() )
