@@ -5,10 +5,10 @@ from string import Template
 round_template = Template("""
 #### ${index}
 
-{: prompt }
+{: .prompt }
 ${prompt}
 
-{: response }
+{: .response }
 ${response}
 """)
 
