@@ -30,7 +30,7 @@ def blockquote( text:str ) -> str:
 def bard_to_md( source_json: dict ) -> str:
     rounds = source_json['rounds']
     rounds = [
-        format_round( i + 1, round['query'], round['response'] )
+        format_round( i + 1, round['prompt'], round['response'] )
         for i, round in enumerate( rounds )
     ]
     rounds_str = "\n".join( rounds )
